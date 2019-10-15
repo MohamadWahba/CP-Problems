@@ -1,0 +1,94 @@
+//https://www.hackerrank.com/challenges/waiter/problem
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+int main()
+{
+//problem variables
+    stack<int>data;
+    stack<int>div_data;
+    stack<int>not_div_data;
+
+    int N , Q ;
+
+//creating prime numbers
+    vector<int>primes;
+    primes.push_back(2);
+    primes.push_back(3);
+
+
+for(int i = 5 ; i<=10000 ; i+=2)
+{
+     int flag = 0;
+     for(int j = 3 ; j<i ; j+=2)
+        {
+
+            if(i%j == 0)
+                flag = 1;
+
+        }
+        if(!flag)
+            primes.push_back(i);
+}
+
+
+//receiving inputs
+    cin>>N>>Q;
+    for(int i = 0 ; i<N ; i++)
+    {
+        int k;
+        cin>>k;
+        data.push(k);
+    }
+
+//main solution 
+for(int i = 0 ; i<Q ; i++)
+{
+    if(data.empty())
+        break;
+
+    int corr_prime = primes[i];
+
+   while (!data.empty())
+    {
+
+        int element = data.top();
+        data.pop();
+
+        if(element%corr_prime == 0)
+            div_data.push(element);
+        else
+            not_div_data.push(element);
+
+    }
+
+   while(!div_data.empty())
+   {
+      cout<<div_data.top()<<endl;
+      div_data.pop();
+   }
+
+   data = not_div_data;
+
+   while(!not_div_data.empty())
+   {
+       not_div_data.pop();
+   }
+
+}
+
+while(!data.empty())
+   {
+      cout<<data.top()<<endl;
+      data.pop();
+   }
+
+
+
+
+ return 0 ;
+}
+
